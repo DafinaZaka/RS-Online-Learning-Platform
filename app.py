@@ -16,7 +16,7 @@ def recommend(course):
 
     return recommended_courses
 
-st.header('Online Learning Platforms Recommender System Using Machine Learning')
+st.header('Online Learning Platforms Recommender System')
 courses = pickle.load(open('artifacts/final_data.pkl', 'rb'))
 similarity = pickle.load(open('artifacts/similarity.pkl', 'rb'))
 
@@ -34,8 +34,19 @@ websites_filter = st.selectbox(
     ["All", "Udacity", "Coursera", "EdX"]
 )
 
+difficulty_filter = st.selectbox(
+    "Filter by difficulty level:",
+    ["All", "Beginner", "Intermediate", "Advanced"]
+)
+
 if websites_filter != "All":
     filtered_courses = filtered_courses[courses['Websites'].str.contains(websites_filter)]
+
+if len(filtered_courses) > 0 and difficulty_filter != "All":
+    filtered_courses = filtered_courses[
+        (courses['Difficulty Level'].fillna('').str.contains(difficulty_filter)) |
+        (courses['Difficulty Level'].isnull())
+    ]
 
 if len(filtered_courses) == 0:
     st.write("No matching courses found.")
