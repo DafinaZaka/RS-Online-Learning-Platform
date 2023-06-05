@@ -2,6 +2,24 @@ import pickle
 import streamlit as st
 import pandas as pd
 
+# def add_bg_from_url():
+#     st.markdown(
+#          f"""
+#          <style>
+#          .stApp {{
+#              background-image: url("https://news.utexas.edu/wp-content/uploads/2020/04/Illustration_Online-Classes.png");
+#              background-attachment: fixed;
+#              background-size: cover
+#          }}
+#          </style>
+#          """,
+#          unsafe_allow_html=True
+#      )
+
+# add_bg_from_url() 
+
+
+
 def recommend(course):
     index = courses[courses['Name'] == course].index[0]
     distances = sorted(list(enumerate(similarity[index])), reverse=True, key=lambda x: x[1])
@@ -40,7 +58,7 @@ difficulty_filter = st.selectbox(
 )
 
 if websites_filter != "All":
-    filtered_courses = filtered_courses[courses['Websites'].str.contains(websites_filter)]
+    filtered_courses = filtered_courses[courses['Website'].str.contains(websites_filter)]
 
 if len(filtered_courses) > 0 and difficulty_filter != "All":
     filtered_courses = filtered_courses[
