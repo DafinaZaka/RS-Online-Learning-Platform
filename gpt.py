@@ -1,22 +1,13 @@
 import streamlit as st
 import openai
-import os 
 
-# Load environment variables from .env file
-dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
-if os.path.exists(dotenv_path):
-    with open(dotenv_path) as f:
-        for line in f:
-            key, value = line.strip().split('=')
-            os.environ[key] = value
-
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+OPENAI_API_KEY = "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"
 
 openai.api_key = OPENAI_API_KEY
 
 def generate_recommendation(keyword):
     response = openai.Completion.create(
-        engine="text-davinci-003",
+        engine="davinci-codex",
         prompt=f"I am looking for online courses about '{keyword}'. Can you recommend any?",
         max_tokens=100,
         temperature=0.7,
