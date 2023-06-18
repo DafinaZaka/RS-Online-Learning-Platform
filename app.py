@@ -2,23 +2,6 @@ import pickle
 import streamlit as st
 import pandas as pd
 
-# def add_bg_from_url():
-#     st.markdown(
-#          f"""
-#          <style>
-#          .stApp {{
-#              background-image: url("https://news.utexas.edu/wp-content/uploads/2020/04/Illustration_Online-Classes.png");
-#              background-attachment: fixed;
-#              background-size: cover
-#          }}
-#          </style>
-#          """,
-#          unsafe_allow_html=True
-#      )
-
-# add_bg_from_url() 
-
-
 
 def recommend(course):
     index = courses[courses['Name'] == course].index[0]
@@ -28,6 +11,7 @@ def recommend(course):
         course_info = courses.iloc[i[0]]
         recommended_courses.append({
             'Name': course_info['Name'],
+            'Institution': course_info['Institution'],
             'Link': course_info['Link'],
             'Description': course_info['Description']
         })
@@ -85,14 +69,24 @@ else:
         filtered_courses
     )
 
+    
+    # Display the link and description of the selected course from the dropdown
+    selected_course_info = courses[courses['Name'] == selected_course].iloc[0]
+    with st.expander(selected_course_info['Name']):
+        st.write("**Link:**", selected_course_info['Link'])
+        description = selected_course_info['Description'].replace('�', "'")
+        st.write("**Description:**", description)
+
     if st.button('Show other similar courses'):
         if selected_course in courses_list.values:
             recommended_courses = recommend(selected_course)
             st.write("Recommended Courses:")
             for course in recommended_courses:
                 with st.expander(course['Name']):
+                    # st.write("**Institution:**", course['Institution'])
                     st.write("**Link:**", course['Link'])
                     description = course['Description'].replace('�', "'")
                     st.write("**Description:**", description)
         else:
             st.write("Invalid course selected.")
+
