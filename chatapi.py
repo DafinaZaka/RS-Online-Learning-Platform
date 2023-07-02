@@ -32,7 +32,7 @@ def generate_recommendation(keyword):
 
 st.header('Online Learning Platforms Recommender System')
 
-selected_course = st.text_input("Search for a course")
+selected_course = st.text_input("Please give some information about the course you are looking for:")
 
 if selected_course:
     recommendation = generate_recommendation(selected_course)
