@@ -1,6 +1,12 @@
 import pickle
 import streamlit as st
 import pandas as pd
+import re
+
+def extract_first_sentences(text):
+    # Use regex to split the text into sentences and return the first 5 sentences
+    sentences = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s', text)
+    return ' '.join(sentences[:3])
 
 
 def recommend(course):
@@ -85,8 +91,9 @@ else:
                 with st.expander(course['Name']):
                     # st.write("**Institution:**", course['Institution'])
                     st.write("**Link:**", course['Link'])
-                    description = course['Description'].replace('�', "'")
-                    st.write("**Description:**", description)
+                    first_sentences = extract_first_sentences(selected_course_info['Description'].replace('�', "'"))
+                    st.write("**Description:**", first_sentences)
+                   
         else:
             st.write("Invalid course selected.")
 
