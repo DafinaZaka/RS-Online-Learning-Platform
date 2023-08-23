@@ -2,6 +2,7 @@ import pickle
 import streamlit as st
 import pandas as pd
 import re
+import json
 
 def extract_first_sentences(text):
     # Use regex to split the text into sentences and return the first 5 sentences
@@ -27,6 +28,7 @@ def recommend(course):
 st.header('Online Learning Platforms Recommender System')
 courses = pickle.load(open('artifacts/final_data.pkl', 'rb'))
 similarity = pickle.load(open('artifacts/similarity.pkl', 'rb'))
+
 
 courses_list = pd.Series(courses['Name'].values)
 
@@ -80,7 +82,7 @@ else:
     selected_course_info = courses[courses['Name'] == selected_course].iloc[0]
     with st.expander(selected_course_info['Name']):
         st.write("**Link:**", selected_course_info['Link'])
-        description = selected_course_info['Description'].replace('�', "'")
+        description = extract_first_sentences(selected_course_info['Description'].replace('�', "'"))
         st.write("**Description:**", description)
 
     if st.button('Show other similar courses'):
@@ -91,7 +93,7 @@ else:
                 with st.expander(course['Name']):
                     # st.write("**Institution:**", course['Institution'])
                     st.write("**Link:**", course['Link'])
-                    first_sentences = extract_first_sentences(selected_course_info['Description'].replace('�', "'"))
+                    first_sentences = extract_first_sentences(course['Description'].replace('�', "'"))
                     st.write("**Description:**", first_sentences)
                    
         else:
