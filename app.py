@@ -10,27 +10,9 @@ def extract_first_sentences(text):
     return ' '.join(sentences[:3])
 
 
-# def recommend(course):
-#     index = courses[courses['Name'] == course].index[0]
-#     distances = sorted(list(enumerate(similarity[index])), reverse=True, key=lambda x: x[1])
-#     recommended_courses = []
-#     for i in distances[1:6]:
-#         course_info = courses.iloc[i[0]]
-#         recommended_courses.append({
-#             'Name': course_info['Name'],
-#             'Institution': course_info['Institution'],
-#             'Link': course_info['Link'],
-#             'Description': course_info['Description']
-#         })
-
-#     return recommended_courses
-
-
-
-
 def recommend(course):
-    index = courses[courses['Name'] == course].index[0]  # Get the index from courses DataFrame
-    distances = sorted(enumerate(similarity.loc[index]), reverse=True, key=lambda x: x[1])
+    index = courses[courses['Name'] == course].index[0]
+    distances = sorted(list(enumerate(similarity[index])), reverse=True, key=lambda x: x[1])
     recommended_courses = []
     for i in distances[1:6]:
         course_info = courses.iloc[i[0]]
@@ -45,13 +27,30 @@ def recommend(course):
 
 
 
-st.header('Online Learning Platforms Recommender System')
-# courses = pickle.load(open('artifacts/final_data.pkl', 'rb'))
-# similarity = pickle.load(open('artifacts/similarity.pkl', 'rb'))
-courses = pd.read_csv('artifacts/final_data.csv')
 
-# Load similarity data from the CSV file
-similarity = pd.read_csv('artifacts/similarity.csv')
+# def recommend(course):
+#     index = courses[courses['Name'] == course].index[0]  # Get the index from courses DataFrame
+#     distances = sorted(enumerate(similarity.loc[index]), reverse=True, key=lambda x: x[1])
+#     recommended_courses = []
+#     for i in distances[1:6]:
+#         course_info = courses.iloc[i[0]]
+#         recommended_courses.append({
+#             'Name': course_info['Name'],
+#             'Institution': course_info['Institution'],
+#             'Link': course_info['Link'],
+#             'Description': course_info['Description']
+#         })
+
+#     return recommended_courses
+
+
+
+st.header('Online Learning Platforms Recommender System')
+courses = pickle.load(open('artifacts/final_data.pkl', 'rb'))
+similarity = pickle.load(open('artifacts/similarity.pkl', 'rb'))
+# courses = pd.read_csv('artifacts/final_data.csv')
+
+# similarity = pd.read_csv('artifacts/similarity.csv')
 
 
 courses_list = pd.Series(courses['Name'].values)
