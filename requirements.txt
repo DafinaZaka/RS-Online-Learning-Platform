@@ -1,0 +1,4 @@
+### dependency
+streamlit
+
+openai==0.27.0
