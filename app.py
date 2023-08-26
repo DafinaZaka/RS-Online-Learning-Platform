@@ -61,10 +61,7 @@ if selected_course:
     filtered_courses = courses_list[courses_list.str.contains(selected_course, case=False)]
 else:
     filtered_courses = courses_list
-if selected_course:
-    selected_filtered_courses = filtered_courses[filtered_courses['Name'] == selected_course]
-    if not selected_filtered_courses.empty:
-        recommended_courses = recommend(selected_filtered_courses, selected_course)
+
        
 websites_filter = st.selectbox(
     "Filter by website:",
