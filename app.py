@@ -3,9 +3,9 @@ import streamlit as st
 import pandas as pd
 import re
 import json
-
+#shorten the description into 3 sentences
 def extract_first_sentences(text):
-    # Use regex to split the text into sentences and return the first 5 sentences
+    # Use re to split the text into sentences and return the first 3 sentences
     sentences = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s', text)
     return ' '.join(sentences[:3])
 
@@ -24,24 +24,6 @@ def recommend(course):
         })
 
     return recommended_courses
-
-
-
-
-# def recommend(course):
-#     index = courses[courses['Name'] == course].index[0]  # Get the index from courses DataFrame
-#     distances = sorted(enumerate(similarity.loc[index]), reverse=True, key=lambda x: x[1])
-#     recommended_courses = []
-#     for i in distances[1:6]:
-#         course_info = courses.iloc[i[0]]
-#         recommended_courses.append({
-#             'Name': course_info['Name'],
-#             'Institution': course_info['Institution'],
-#             'Link': course_info['Link'],
-#             'Description': course_info['Description']
-#         })
-
-#     return recommended_courses
 
 
 
